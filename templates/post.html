@@ -1,0 +1,206 @@
+<html>
+<meta charset="utf-8">
+<head>
+ 
+    <style>
+        tr{
+            padding:5px;
+        }
+        td{
+
+            padding:5px;
+        }
+    </style>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<!-- <script src="jquery_min.js"></script> -->
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        getdata();
+		//getdata2();
+    });
+    function getdata() {
+    //$.get("http://192.168.0.4:5000/", function (data) {
+    $.get("https://d9ff-122-118-51-127.ngrok.io/cities/all", function (data) {
+        console.log(data[0].city_name);
+        document.getElementById("city").innerHTML = data[0].city_name;
+        document.getElementById("city_tab").innerHTML = data[0].city_name;
+        document.getElementById("city_tab2").innerHTML = data[1].city_name;
+        document.getElementById("city_tab3").innerHTML = data[2].city_name;
+        document.getElementById("city_loc").innerHTML = data[0].location.latitude;
+        document.getElementById("city_loc2").innerHTML = data[1].location.latitude;
+        document.getElementById("city_loc3").innerHTML = data[2].location.latitude;
+        document.getElementById("country").innerHTML = data[0].country_name;
+        document.getElementById("country2").innerHTML = data[1].country_name;
+        document.getElementById("country3").innerHTML = data[2].country_name;
+//         $("#city").val(data[0].city_name);
+        //alert(data)
+    });
+    setTimeout(function () {
+        getdata();
+        }, 1000);
+    }
+	
+	function getdata2() {
+    //$.get("http://192.168.0.4:5000/", function (data) {
+    $.get("http://127.0.0.1:5000/", function (data) {
+		$('#time').text(data.s);
+        console.log(data.s);
+		
+    });
+    setTimeout(function () {
+        getdata2();
+        }, 1000);
+    }
+	
+	
+
+     <!-- function getdata(){ -->
+        <!-- $.ajax({ -->
+     <!-- url: "http://127.0.0.1:5000", -->
+     <!-- type: "GET", -->
+     <!-- success: function (result) { -->
+         <!-- console.log(result.kg); -->
+     <!-- }, -->
+     <!-- error: function (error) { -->
+         <!-- console.log("error:", error); -->
+     <!-- } -->
+
+ <!-- }); -->
+
+     <!-- } -->
+	 
+	 function text_pub(){
+	alert('fasf');
+	var item = $('#item').val();
+	var name = $('#name').val();
+	
+	<!-- alert("項目 : "+item+"\n價格 : "+price+"\n名稱 : "+name); -->
+	$.ajax({
+			type: 'POST',
+			url: "https://e8e0-122-118-24-173.ngrok.io/insert" ,
+			
+			contentType: "application/json;charset=UTF-8",
+			data: JSON.stringify(
+			{
+			"name":name,
+			"items":item	
+			}
+		),
+dataType: 'json',
+
+		success: alert('成功') 
+		
+	});
+}
+
+
+</script>
+
+</head>
+<body>
+
+<div id="myElement">
+    Hello, world!
+   <!-- <a onclick="getdata()" >我是測試</a><br/> -->
+   <a class="city" id="city">123</a>
+   <br/>
+   <a id="time">312  </a>
+   <br/>
+   <br/>
+   <br/>
+   <table style="border:1px solid;padding:5px;" >
+   <tr>
+    <td  >
+        國家:
+    </td>
+   <td id="country" style="border:1px solid" >
+
+   </td>
+  <td id="country2" style="border:1px solid" >
+
+   </td>
+  <td id="country3" style="border:1px solid" >
+
+   </td>
+   </tr>
+      <tr>
+    <td  >
+        城市:
+    </td>
+   <td id="city_tab" style="border:1px solid" >
+
+   </td>
+  <td id="city_tab2" style="border:1px solid" >
+
+   </td>
+  <td id="city_tab3" style="border:1px solid" >
+
+   </td>
+   </tr>
+
+
+   <tr>
+    <td  >
+        座標:
+    </td>
+   <td id="city_loc" style="border:1px solid" >
+
+   </td>
+  <td id="city_loc2" style="border:1px solid" >
+
+   </td>
+  <td id="city_loc3" style="border:1px solid" >
+
+   </td>
+   </tr>
+   </table>
+</div>
+<div id="content">
+品名 <input type="text" id="name" /><br/>
+項目 <input type="text" id="item" />
+廠牌 <input type="text" id="company" />
+圖片 <input type="file" id="upload" multiple />
+<input type="button" value="送出" onclick="return text_pub()">
+<input type="button" value="上傳" onclick="return myFunction()">
+</div>
+<a id="GFG"> </a>
+ <script>  
+        function myFunction() {  
+           
+  
+              var resultFile = document.getElementById("upload").files[0];
+            if (resultFile) {
+                var reader = new FileReader(); 
+				//console.log(resultFile)
+				console.log(reader)
+				//reader.readAsArrayBuffer(resultFile);
+                reader.readAsDataURL(resultFile);
+				//console.log(reader.readyState);
+				//console.log(reader.result);
+                reader.onload = function (e) {
+                    var urlData = this.result;
+					console.log(urlData.split(',')[1]);
+                    document.getElementById("GFG").innerHTML += "<img src='" + urlData + "' alt='" + resultFile.name + "' />";
+					
+					
+					let arr = urlData.split(','),
+					mime = arr[0].match(/:(.*?);/)[1],
+					bstr = atob(arr[1]),
+					n = bstr.length,
+					u8arr = new Uint8Array(n);
+					while (n--) {
+						u8arr[n] = bstr.charCodeAt(n);
+					}
+					var d =  new Blob([u8arr], {
+					type: mime
+					});
+					
+					console.log(u8arr);
+                }; 
+
+			}  
+		}
+        </script> 
+</body>
+</html>

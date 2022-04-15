@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>CPS系統模擬自動化產線流程</title>
+
+    <script src="bootstrap.js"></script>
+    <style>
+        body,html{
+            height:100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div style="background-color: #808080; height: 100%">
+
+        <div class="col-md-2" style="background-color:cadetblue;">
+
+        </div>
+        <div class="col-md-5 " style="background-color:white;width:50%;position:absolute;left:25%;padding:10px">
+            <h3 style="text-align:center">CPS系統模擬自動化產線流程</h3>
+            <h4 style="text-align:center">指道教授:陳郁文、王正賢 教授 / 開發團隊 : 許景貿、錢正安</h4>
+            <h4 style="text-align:right">撰稿人 : 許景貿、錢正安</h4>
+            <br />
+            <br />
+            <p>
+                &nbsp;&nbsp; 因應現正熱門之工業議題，本專題試規劃出具備基礎智慧之簡易自動化物流平台，透過CPS概念，將實體規劃先在程式中模擬，後再由實體機械手臂呈現出規劃內容，未來可望透過虛擬工廠即可遠端操作現場作業，真正實現CPS與智慧化工廠的理論。
+                <br />
+                本專題運用機械手臂、感測器(顏色、視覺、Linkit7697)、可程式控制器(PLC)、輸送帶以及無人車來模擬工廠的生產線，並建構具工業4.0規範之小型自動化產線。
+                <br />
+                <br />
+                <img src="static/CPS_flow.png" style="position:relative;width:60%;height:auto;left:20%" />
+                <br />
+                <br />
+                本專題先透過Visual Components軟體做初步設施規劃，確認各物件位置後，再架設實體物件，將機械手臂、輸送帶及無人車做整合，先藉由系統模擬設施規劃，以降低實際架設所消耗之人力及搬運成本。
+                <br>
+                <br>
+                <img src="static/CPS_flow2.png" style="position:relative;width:80%;height:auto;left:10%" />
+                <br>
+                <br>
+                專題系統模擬軟體架設完成後建立之硬體系統流程架設藉由M1機械手臂將貨品(方塊)由供料塔先送上輸送帶，後通過第二隻手臂進行顏色辨識
+                若貨品顏色為紅色，定義為成品及送上右側輸送帶，再由第三隻手臂送上無人車。
+                <br>
+                <br>
+                <img src="static/CPS_flow3.png" style="position:relative;width:60%;height:auto;left:20%" />
+                <br />
+                <br />
+                若貨品顏色為非紅色，則判定為半成品，即送往左側輸送帶集中放置。
+                <br />
+                <br />
+                <img src="static/CPS_flow4.png" style="position:relative;width:80%;height:auto;left:10%" />
+                <br />
+                <br />
+                本專題應用之機械手臂透過手臂套裝軟體設定物件座標以抓取物件，由手臂附加的氣泵套件吸取本專題之物件。輸送帶套組包含紅外線及顏色感應器，將其串接手臂I/O，
+                當紅外線感測器感測物體經過發送訊號停止輸送帶及告知手臂夾取物件至顏色感應器辨識。第二條輸送帶為PLC控制，由於PLC應用僅限於單純I/O控制，在此加入Linkit7697控制板模組，
+                藉由超音波感測器判斷物件經過與否，發送訊號至手臂及繼電器，繼電器接收訊號後即開啟斷開PLC於輸送帶之供電，同時通知手臂將物件夾取至無人車。
+                也結合Linkit7697控制板優點，將超音波感測之訊號傳送至雲端資料庫，並透過CSS架設網頁將資料庫訊息顯示於網頁，由此得知貨品倉儲狀況。
+                <hr />
+                <br />
+                透過將Linkit7697接收的訊息整合，本專題網頁倉儲介面設計主要以HTML搭配CSS、AJAX、PHP與jQuery等，達成數據收集及監控等功能介面，介面主要以四個區塊呈現分別為：
+                <br />
+                <br />
+                1.	貨品現況     <br />
+                2.	物件分類標示     <br />
+                3.	即時物件數量     <br />
+                4.	更新時間     <br />
+                <img src="static/CPS_flow5.png" style="position:relative;width:50%;height:auto;left:25%" />
+                <br />
+                <br />
+                當物件方塊經過超音波感測器時，觸發距離遮蔽，則累積物件數量為1，再由Linkit7697透過Wifi聯網將資料上傳至本地端網頁顯示，再透過PHP網頁程式碼編纂，將本地端網頁資料接收至XAMPP資料庫當中，再由本專題CSS設計之HTML網頁將資料庫之累積計數資料呈現。
+                <br />
+                <br />
+                <img src="static/CPS_flow6.png" style="position:relative;width:80%;height:auto;left:10%" />
+            </p>
+        </div>
+    </div>
+   
+   
+</body>
+</html>

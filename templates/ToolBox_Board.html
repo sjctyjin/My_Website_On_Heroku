@@ -1,0 +1,447 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        html,body{
+            height:100%;
+            padding:0px;
+            margin:0px;
+        }
+        .pan1 {
+            border: 1px solid;
+            width: 50%;
+            height: auto;
+            position: relative;
+            left: 25%;
+            
+          /*  overflow: scroll;
+            resize: both;*/
+        }
+        .empty {
+            border: 1px solid;
+            width: 50%;
+            height:auto;
+            position:absolute;
+            left:35%;
+        }
+        img{
+            z-index:-999;
+        }
+    </style> 
+    
+</head>
+<body >
+    <div style="display: flex">
+
+        <div class="tol_box" style="display : inline;width:25%;">
+            <div class="pan1" id="draggle" draggable="true">
+                <img src="static/Cup.jpg" draggable="false" style="position:relative;width:100%" />
+            </div>
+            <div class="pan1" id="draggle2" draggable="true">
+                
+                <img src="static/employee.jpg" draggable="false" style="position:relative;width:100%" />
+            </div>
+            <div class="pan1" id="draggle3" draggable="true">
+                
+                <img src="static/Box.jpg" draggable="false" style="position:relative;width:100%" />
+            </div>
+            <div class="pan1" id="draggle4" draggable="true">
+                <img src="static/maintain.jpg" draggable="false" style="position:relative;width:100%" />
+            </div>
+        </div>
+
+        <div class="show" style="display : inline;width:75%">
+            <div class="box" style="text-align:center">
+                <h1>拖動</h1>
+                 寬度 : <input type="range" min="0" max="100" id="width_win" step="1" value="50" onchange="test()" oninput="test();">
+                 <br/>
+                 高度 : <input type="range" min="0" max="100" id="height_win" step="1" value="50" onchange="hei_adj()" oninput="hei_adj();">
+                <div class="empty" draggable="false">
+                    <!--<div class="pan1">
+
+                    </div>-->
+                    <br />
+                    <hr />
+                    <br />
+                    <br />
+                    <br />
+                    <hr />
+                    <br />
+                </div>
+
+            </div>
+        </div>
+        <div id="panel_control" style="width:100%;height:100%;position:absolute;display:none">
+            <div style="width:100%;height:100%;background-color:black;opacity:0.5;">
+
+            </div>
+            <div style="position:fixed;background-color:white;border-radius:15px;border:2px solid brown;width:50%;left:25%;padding:10px;top:10%;opacity:1;">
+                <table>
+                    <tr>
+                        <td>
+                            容器id :
+                        </td>
+                        <td>
+                            <input type="text" id="div_id" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            定位點-X :
+                        </td>
+                        <td>
+                            <input type="text" id="div_X" />
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            定位點-Y :
+                        </td>
+                        <td>
+                            <input type="text" id="div_Y" />
+                        </td>
+
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            寬度 :
+                        </td>
+                        <td>
+                            <input type="text" id="div_Width" />
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            高度 :
+                        </td>
+                        <td>
+                            <input type="text" id="div_Height" />
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            內容 :
+                        </td>
+                        <td>
+                            <input type="text" id="div_Content" />
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="btn_confirm" type="button" value="確定" onclick="data_load();" />
+                            <input id="btn_cancel" type="button" value="取消" onclick="windiw_close();" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+   
+    
+
+    <script>
+        const empty = document.querySelector('div.empty');
+        const h1 = document.querySelector('h1');
+        //const panel = document.querySelector('div .pan1');
+        const panel = empty.querySelector('div .pan1');
+        const pane2 = document.querySelector('div #draggle2');
+        const pane3 = document.querySelector('div #draggle3');
+        const pane4 = document.querySelector('div #draggle4');
+        var f = empty.getElementsByTagName("div");//empty中的div數量
+        let name;
+        var count_pan1 = 0;
+        
+        //function loadd() {
+        //    console.log('123');
+        //    for (var c0 = 0; c0 < f; c0++) {
+        //        console.log('123');
+        //    }
+        //}
+
+       
+
+
+
+        //=========================================   拖曳開始  =========================================
+
+        document.addEventListener('dragstart', (e) => {
+            name = e.target.id;
+        }, false);
+
+        //=========================================   拖曳中  =========================================
+
+        document.addEventListener('drag', (e) => {
+            e.target.style.border = '5px dashed red';
+            empty.style.border = '5px dashed red';
+            
+        }, false);
+        //=========================================   拖曳結束  =========================================
+
+        document.addEventListener('dragend', (e) => {
+           
+            e.target.style.border = '1px solid';
+            empty.style.border = '1px solid';
+            empty.querySelector('div').style.border = '1px solid';
+            empty.querySelector('div').draggable = false;
+            h1.innerHTML = '拖曳至區塊'
+            h1.style.color = 'black';
+            
+        }, false);
+        //=========================================   拖曳進入區域  =========================================
+
+        empty.addEventListener('dragenter', (e) => {
+
+            h1.innerHTML = name;
+            h1.style.color = 'red';
+
+        }, false);
+        //=========================================   拖曳結束  =========================================
+
+        empty.addEventListener('dragover', (e) => {
+
+            e.preventDefault();
+
+        },false);
+        //=========================================   放開拖曳  =========================================
+
+        empty.addEventListener('drop', (e) => {
+            e.preventDefault();
+            //console.log(document.querySelector(`.empty div[id=${name}]`));
+            if (document.querySelector(`.empty div[id=${name}]`) == null) {
+                show_window();
+            } else {
+                console.log('內部調整');
+            }
+          
+            //var myDiv = document.querySelector(`.tol_box div[id=${name}]`);
+            //var divClone = myDiv.cloneNode(true);
+            //var f = empty.getElementsByTagName("div");//empty中的div數量
+            //var num = 0;
+            //divClone.id = "drop_list_" + num;
+            //divClone.draggable = "false";
+            //divClone.style.width = "100%";
+            //divClone.style.position = "relative";
+            //divClone.style.left = "0px";
+            //for (var i = 0; i < empty.childNodes.length; i++) {
+            //    if (empty.childNodes[i].tagName == "DIV") {
+            //        num++;
+            //        divClone.id = "drop_list_" + num;//num為給定ID流水號
+
+
+            //    }
+            //}
+
+            //e.preventDefault();
+            //console.log(myDiv.id);
+            //console.log(divClone.id);
+            //console.log(name);
+            ////e.target.appendChild(document.querySelector(`div[id=${name}]`));
+            //if (myDiv.id != name) {
+            //    console.log("沒有");
+            //}
+            //else {
+            //    e.target.appendChild(divClone);
+
+            //    for (var c0 = 0; c0 < empty.getElementsByTagName("div").length; c0++) {
+            //        console.log(c0);
+            //        f[c0].addEventListener("dblclick", function (e) {
+            //            //e.target.innerHTML = "Hello World";
+            //            if (count_pan1 == 0) {
+            //                count_pan1 = 1
+            //                e.target.style.resize = "both";
+            //                e.target.style.overflow = "scroll";
+            //                e.target.appendChild(document.createElement('input'));
+            //                e.target.appendChild(document.createElement('button'));
+            //                e.target.querySelector('button').innerHTML = "確定";
+            //                e.target.querySelector('button').id = "submit_to";
+            //                e.target.querySelector('input').id = "intext";
+            //                e.target.querySelector('input').value = "123";
+            //                e.target.querySelector('button').addEventListener("click", function (f) {
+            //                    console.log(e.target.querySelector('input').value);
+            //                    e.target.innerHTML = e.target.querySelector('input').value;
+            //                    e.target.style.resize = "none";
+            //                    e.target.style.overflow = "auto";
+            //                    count_pan1 = 0
+            //                });
+            //            }
+
+            //        });
+            //    }
+            //}
+            
+        }, false);
+        //=========================================   拖曳離開區域  =========================================
+
+        empty.addEventListener('dragleave', (e) => {
+
+            h1.innerHTML = '拖曳至區塊'
+            h1.style.color = 'black';
+
+        }, false);
+
+        //拉條程式 (左右位置)
+        function test(e) {
+            if (count_pan1 == 1) {
+                var disp = document.getElementById('submit_to').parentElement;
+                disp.style.left = document.getElementById('width_win').value + '%';
+                console.log(document.getElementById('width_win').value);
+            //console.log(document.getElementById('submit_to').parentElement.id);
+            }
+        }
+        //拉條程式 (上下位置)
+        function hei_adj() {
+            if (count_pan1 == 1) {
+                var disp = document.getElementById('submit_to').parentElement;
+                disp.style.top = document.getElementById('height_win').value + 'vh';
+                console.log(document.getElementById('height_win').value);
+                //console.log(document.getElementById('submit_to').parentElement.id);
+            }
+        }
+        //顯示設定頁面
+        function show_window() {
+            document.getElementById('panel_control').style.display = "block";
+
+                            }
+        //關閉設定頁面
+        function windiw_close() {
+            document.getElementById('panel_control').style.display = "none";
+
+        }
+                           
+
+        function data_load() {
+            //alert('123');
+            var myDiv = document.querySelector(`.tol_box div[id=${name}]`);
+            var myimg = myDiv.querySelector('img');
+            //console.log(myimg);
+            var divClone = myDiv.cloneNode(true);
+            var img = myimg.cloneNode(true);
+            var text_a = document.createElement('a');
+            var num = 0;
+            //divClone.appendChild(vsd);
+            for (var i = 0; i < empty.childNodes.length; i++) {
+                if (empty.childNodes[i].tagName == "DIV") {
+                    num++;
+                    divClone.id = "drop_list_" + num;//num為給定ID流水號
+                    divClone.style.position = "absolute";
+                    divClone.style.width = document.getElementById('div_Width').value;
+                    divClone.style.height = document.getElementById('div_Height').value;
+                    divClone.style.top = document.getElementById('div_X').value;
+                    divClone.style.left = document.getElementById('div_Y').value;
+                    text_a.innerHTML = document.getElementById('div_Content').value;
+                    
+                }
+            }
+            if (num == 0) {
+                divClone.id = "drop_list_" + num;
+                divClone.draggable = "false";
+                
+                divClone.style.position = "absolute";
+                divClone.style.width = document.getElementById('div_Width').value;
+                divClone.style.height = document.getElementById('div_Height').value;
+                divClone.style.top = document.getElementById('div_X').value;
+                divClone.style.left = document.getElementById('div_Y').value;
+                text_a.innerHTML = document.getElementById('div_Content').value;
+               
+            }
+
+            
+            empty.appendChild(divClone);
+            //在容器中添加圖片
+            //empty.querySelector('#' + divClone.id).appendChild(img);
+            //在容器中添加<a>
+            empty.querySelector('#' + divClone.id).appendChild(text_a);
+            console.log();
+            
+            //console.log(empty.querySelector(divClone.id));
+            
+            
+
+            document.getElementById('panel_control').style.display = "none";
+            //e.target.appendChild(document.querySelector(`div[id=${name}]`));
+            if (myDiv.id != name) {
+                console.log("沒有");
+            }
+            else {
+                
+
+                for (var c0 = 0; c0 < empty.getElementsByTagName("div").length; c0++) {
+                    //console.log(c0);
+                    f[c0].addEventListener("dblclick", function (e) {
+                        //e.target.innerHTML = "Hello World";
+                        if (count_pan1 == 0) {
+                            count_pan1 = 1
+                            e.target.style.resize = "both";
+                            e.target.style.overflow = "scroll";
+                            e.target.appendChild(document.createElement('input'));
+                            var btn1 = document.createElement('button');
+                            var btn2 = document.createElement('button');
+                            var tracebar_1 = document.createElement('input');
+                            
+                            btn1.id = "submit_to";
+                            btn1.innerHTML = "確定";
+                            btn2.id = "submit_del";
+                            btn2.innerHTML = "刪除";
+                            tracebar_1.id = "tracr_1";
+                            //<input type="range" min="0" max="100" id="rea" step="1" value="50" onchange="console.log(document.getElementById('rea').value)" oninput="console.log(document.getElementById('rea').value)">
+
+                            //tracebar_1.type = "range";
+                            //tracebar_1.min = "0";
+                            //tracebar_1.min = "100";
+                            //tracebar_1.step = "1";
+                            //tracebar_1.value = "50";
+                            //tracebar_1.oninput = function (e) {
+                            //    console.log(e.target.value);
+                            //};
+                            e.target.appendChild(btn1);
+                            e.target.appendChild(btn2);
+                            //e.target.appendChild(tracebar_1);//拖曳bar
+                            e.target.querySelector('input').id = "intext";
+                            e.target.querySelector('input').value = e.target.querySelector('a').innerHTML;
+                            document.getElementById('submit_to').addEventListener("click", function (f) {
+                                //console.log(e.target.querySelector('input').value);
+                                e.target.querySelector('a').innerHTML = e.target.querySelector('input').value;
+                                //e.target.style.left = e.target.querySelector('input').value;
+                                e.target.style.resize = "none";
+                                e.target.style.overflow = "auto";
+                                e.target.removeChild(e.target.querySelector('input'));
+                                e.target.removeChild(e.target.querySelector('button'));
+                                e.target.removeChild(e.target.querySelector('button'));
+                                count_pan1 = 0
+                            });
+
+                            document.getElementById('submit_del').addEventListener("click", function (f) {
+                                empty.removeChild(document.getElementById(e.target.id));
+                                console.log(e.target.id);
+                               
+                            });
+                        }
+
+                    });
+                }
+            }
+
+
+            
+
+        }
+
+
+
+    </script>
+</body>
+</html>
