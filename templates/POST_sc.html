@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="static/jquery-3.4.1.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <link href="static/bootstrap.css" rel="stylesheet">
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html,body{
+            padding: 0px;
+            height: 100%;
+            margin: 0px;
+            background-color: rgba(0, 0, 0, 0.4);
+            background-image:url(static/fx5u.jpg);
+            background-attachment: scroll;
+            /* background-repeat: no-repeat; */
+            background-blend-mode: multiply;
+            background-position:center;
+            background-size:cover;
+
+        }
+        .plc_area_1{
+            position: relative;
+            left: 0%;
+            /* width: 25%; */
+            height: 80vh;
+            overflow: scroll;
+            font-size:3vmin;
+            padding:20px;
+            background-color: rgba(255,255, 255, 0.8);
+            background-blend-mode: multiply;
+            /* background-image: url(static/add.png); */
+            /* background-size:30%;
+            background-attachment: scroll;
+            background-repeat: no-repeat;
+            background-position:center; */
+        }
+        input{
+            width: 20%;
+            font-size: 3vmin;
+        }
+        button{
+            width: 30%;
+            height: auto;
+            font-size: 3vmin;
+        }
+        select{
+            font-size: 3vmin;
+        }
+        #single_set{
+            background-color: bisque;
+            width: 100%;
+        }
+        #double_set{
+            background-color: aquamarine ;
+            width: 100%;
+        }
+
+/* ==================================================== */
+.btn-box {
+    position: relative;
+  display:block;
+    top:10px;
+    left: 20px;
+  width: 40px;
+  height: 25px;
+  border-radius:100px;
+  background-color: #ccc;
+  box-shadow: 0px 3px 0px rgba(0,0,0,.13) inset;
+}
+.text{
+    position: relative;
+    left: 35px;
+}
+#btndelete{
+    position: relative;
+    left: 50px;
+}
+.btn-box .btn {
+    position: relative;
+   
+  display:block;
+  width: 10px;
+  height: 25px;
+  border-radius:50%;
+  background-color: #fff;
+  margin-left: 0;/*動畫從ml為0開始*/
+  transition: .5s;
+  box-shadow:1px 2px 5px rgba(0,0,0,.3);
+}
+.checkbox {
+  position:absolute;
+  opacity:0;
+}
+.checkbox:checked + .btn-box {
+  background-color: #8f8;
+}
+.checkbox:checked + .btn-box .btn {
+  margin-left: 20px;
+
+}
+
+        
+
+    </style>
+<script>
+    
+</script>
+<script src="static/plc_event.js"></script>
+
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1 col-xs-12 plc_area_1"  id="pl1" style="display:inline;">
+            PLC位址 : <input id="plc_address" name='plc_address' placeholder="192.168.3.250"  style="width: 50%;" />
+            <button onclick="clear_div(this)">清除</button>
+            <button onclick="close_div(this)">刪除</button>
+            <br/>
+            Single數量&nbsp;&nbsp; :&nbsp; <input id="txt_1" value="0" /><button id="add_single" onclick="add_sin(this)">+</button><br/>
+            Double數量 :&nbsp;&nbsp;<input id="txt_2" value="0" /><button id="add_double" onclick="add_dou(this)">+</button>
+             <div id="single_set">
+                 Single位址<br>
+             </div>
+             <br/>
+             <div id="double_set">
+                 Double位址<br>
+             </div>
+
+         </div>
+
+         <div class="col-md-5 col-xs-12 plc_area_1" id="pl2" style="display:inline;">
+
+
+          </div>
+
+          <div class="col-md-5 col-md-offset-1 col-xs-12 plc_area_1" id="pl3" style="display:inline;">
+
+
+         </div>
+
+         <div class="col-md-5 col-xs-12 plc_area_1" id="pl4" style="display:inline;">
+
+
+         </div>
+    </div>
+
+    <button onclick="text_pub()" style="width:20%;">送出</button>
+
+
+</body>
+</html>
