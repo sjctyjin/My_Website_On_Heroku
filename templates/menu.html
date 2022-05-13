@@ -4,40 +4,79 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   	<script src="static/jquery-3.4.1.min.js"></script>
-    <script src="static/bootstrap.min.js"></script>
-    <link href="static/bootstrap.css" rel="stylesheet">
-    <link href="static/bootstrap.min.css" rel="stylesheet">
+    
   <style>
        body{ 
-           padding: 70px;
+           <!-- padding: 70px; -->
            position:relative;
        }
     </style>
 	<script>
+	$(document).ready(function(){
+	var check = 0;
+	<!-- $(".collapse").hide(); -->
+		<!-- document.getElementById('push_button').addEventListener('click',function(){alert('123')}); -->
 	document.querySelector("button").addEventListener('click',function(){
-		console.log(document.querySelector('.collapse').className);
-		if(document.querySelector('.collapse').className == 'navbar-collapse collapse in'){
-		console.log('fuck');
-			document.querySelector('.collapse').className = "collapse navbar-collapse";
+		if(check == 1){
+		    document.querySelector('.collapse').className = "navbar-collapse collapse in";
+			$(".collapse").slideUp();
+			check = 0;
+		}else{
+			
+			$(".collapse").slideDown();
+			check = 1;
 		}
-		else if(document.querySelector('.collapse').className == 'collapse navbar-collapse'){
-		console.log('fuck');
-		$('#BSC').anim
-			document.querySelector('.collapse').className = "navbar-collapse collapse in";
-		};
+		<!-- if(document.querySelector('.collapse').className == 'navbar-collapse collapse in'){ -->
+		<!-- console.log('fuck'); -->
+		<!-- document.querySelector('.collapse').className = "collapse navbar-collapse"; -->
+			<!-- $(".collapse").slideUp(); -->
+			
+		<!-- } -->
+		<!-- else if(document.querySelector('.collapse').className == 'collapse navbar-collapse'){ -->
+		<!-- console.log('fuck'); -->
+			<!-- $(".collapse").css("display","none"); -->
+			<!-- document.querySelector('.collapse').className = "navbar-collapse collapse in"; -->
+			<!-- $(".collapse").slideDown(); -->
+		<!-- }; -->
 	});
+		
+		document.querySelector("ul").addEventListener('click',function(){
+		
+		    <!-- document.querySelector('.collapse').className = "collapse navbar-collapse"; -->
+			$(".collapse").slideUp();
+			check = 1;
+		})
 		
 	
 
+	})
+	
+	
+function trans(event){
+	
+	console.log(event.innerHTML);
+	if(event.innerHTML == "3D建模作品"){
+		document.querySelector("#menu3").className = "fade";
+	}else{
+		document.querySelector("#menu3").className = "tab-pane fade";
+	}
+	console.log(document.querySelector("#menu3").className);
+		
+	
+	
+	}
 		
 	</script>
+	<script src="static/bootstrap.min.js"></script>
+    <link href="static/bootstrap.css" rel="stylesheet">
+    <link href="static/bootstrap.min.css" rel="stylesheet">
 </head>
 <body  data-target="#navbar-spy" data-spy="scroll" >
 <div>
     <nav class="nav navbar-default navbar-fixed-top" id="navbar-spy">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle"  data-target="#myNavbar">
+                <button type="button" class="navbar-toggle" id="push_button"  data-target="#myNavbar">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span> 
@@ -52,7 +91,7 @@
                     <!-- <li><a href="#menu2">3D建模作品</a></li> -->
 					<!-- <li><a href="#menu3">測試中</a></li> -->
 					
-					 <li><a data-toggle="tab" href="#menu1">CPS自動化倉儲</a>
+					 <li><a data-toggle="tab" href="#menu1" onclick="trans(this)">CPS自動化倉儲</a>
 						<!-- <ul style="position:absolute;top:40px;"> -->
 						<!-- <li><a>1</a></li> -->
 						<!-- <li><a>2</a></li> -->
@@ -60,8 +99,8 @@
 				
 						<!-- </ul> -->
 					 </li>
-                    <li><a data-toggle="tab" href="#menu2">電鍍槽智慧化監控系統</a></li>
-                    <li><a data-toggle="tab" href="#menu3">3D建模作品</a></li>
+                    <li><a data-toggle="tab" href="#menu2" onclick="trans(this)">電鍍槽智慧化監控系統</a></li>
+                    <li><a data-toggle="tab" href="#menu3" onclick="trans(this)">3D建模作品</a></li>
 					<li><a href="#menu3">測試中</a></li>
                 </ul>
 				
