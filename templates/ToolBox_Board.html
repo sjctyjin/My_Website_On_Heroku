@@ -3,6 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+	 <script src="static/jquery-3.4.1.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <link href="static/bootstrap.css" rel="stylesheet">
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+	
+	<script>
+    $(function(){
+      $("#menu_bar").load("static/menu.html");
+    });
+    </script>
+
     <style>
         html,body{
             height:100%;
@@ -33,7 +44,10 @@
     
 </head>
 <body >
-    <div style="display: flex">
+<div id="menu_bar">
+	
+	</div>
+    <div id="menu3" style="display: flex">
 
         <div class="tol_box" style="display : inline;width:25%;">
             <div class="pan1" id="draggle" draggable="true">
