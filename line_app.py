@@ -450,6 +450,10 @@ def RealTime():
         lsi = traceback.format_exc()
         return f"{lsi}<br/>"
 
+@app.route('/Eagle', methods=['GET'])
+def eagle():
+    return render_template('eagle.html')
+
 if __name__ == "__main__":
     # 運行 Flask server
     app.run()

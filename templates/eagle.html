@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap {
+  max-width: 1920px;
+  height: 5000px;
+  background-image: url(https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-color: lightblue;
+  background-size: 100%;
+}
+.header {
+  height: auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  background: green;
+}
+.header p {
+  padding: 0.5em;
+  font-size: 3vmin;
+}
+.mouseImg{
+  position: fixed;
+}
+    </style>
+   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+  
+<div class="wrap">
+   <div class="header">
+     <p>
+       screenX: <span class="screenX"></span>
+       screenY: <span class="screenY"></span>
+     </p>
+     <p>
+       pageX: <span class="pageX"></span>
+       pageY: <span class="pageY"></span>
+     </p>
+     <p>
+       clientX: <span class="clientX"></span>
+       clientY: <span class="clientY"></span>
+     </p>
+
+   </div>
+   <div class="mouseImg">
+    <img width="300" src="static/eagle.png">
+  </div>
+ </div>
+
+ <form action="/upload/" method="post" enctype="multipart/form-data">
+  <input type="text" name="userAccount">
+   <input type="password" name="userPassword">
+  <input type="file" name="userFile">
+  <input type="submit" value="提交">
+  
+  123
+</form>
+ <script>
+
+  var screenX = document.querySelector(".screenX");
+var screenY = document.querySelector(".screenY");
+var pageX = document.querySelector(".pageX");
+var pageY = document.querySelector(".pageY");
+var clientX = document.querySelector(".clientX");
+var clientY = document.querySelector(".clientY");
+var mouseImg = document.querySelector(".mouseImg"); //新增滑鼠游標
+
+var el = document.body;
+
+
+function getPosition(e) {
+screenX.textContent = e.screenX;
+screenY.textContent = e.screenY;
+pageX.textContent = e.pageX;
+pageY.textContent = e.pageY;
+clientX.textContent = e.clientX;
+clientY.textContent = e.clientY;
+console.log("susses");
+}
+
+
+el.addEventListener("mousemove", getPosition, false);
+
+function getPosition(e) {
+  el.style.border = "5px solid red";
+  
+screenX.textContent = e.screenX;
+screenY.textContent = e.screenY;
+pageX.textContent = e.pageX;
+pageY.textContent = e.pageY;
+clientX.textContent = e.clientX;
+clientY.textContent = e.clientY;
+
+mouseImg.style.left = e.clientX + "px"; //滑鼠游標 X 軸
+mouseImg.style.top = e.clientY + "px"; //滑鼠游標 Y 軸
+
+
+console.log("susses");
+}
+
+// el.addEventListener("mouseleave", getPosition2, false);
+el.addEventListener("mousedown", getPosition2, false);
+
+function getRandom(min,max){
+    return Math.floor(Math.random()*(max-min+1))+min;
+};
+
+ function getPosition2(e) {
+   el.style.border = "5px solid green";
+
+ screenX.textContent = e.screenX;
+ screenY.textContent = e.screenY;
+ pageX.textContent = e.pageX;
+ pageY.textContent = e.pageY;
+ clientX.textContent = e.clientX;
+ clientY.textContent = e.clientY;
+
+var r = getRandom(80,205);
+var g = getRandom(80,205);
+var b = getRandom(80,205);
+ var d = document.createElement('a');
+ var imgg = document.createElement('img');
+ imgg.src = "static/eagle.png";
+ imgg.id = "eage";
+ //d.innerHTML = "123";
+ d.appendChild(imgg);
+ d.id = "back123";
+ d.style.width = "100px";
+ d.style.height = "100px";
+ d.style.position = "fixed";
+ //d.style.backgroundColor = "rgb("+r+","+g+","+b+")";
+d.style.left = e.clientX + "px"; //滑鼠游標 X 軸
+d.style.top = e.clientY + "px"; //滑鼠游標 Y 軸 console.log("susses");
+ el.appendChild(d);
+
+ $("a").animate({top:(e.clientY-200)+'px',left:(e.clientX+200)+'px', opacity:'0'},1000,function(){
+	
+	$("a").remove();
+ });
+
+
+ }
+</script>
+</body>
+</html>
